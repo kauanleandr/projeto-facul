@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Fastfood de comidas caseiras e café da manhã – layout com produto em destaque e lista de itens." />
+    <meta name="author" content="" />
+    <title>Bom Dia Fast • Caseiros & Café</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+      :root{
+        --cor-primaria:#ff3d00;/* laranja fastfood */
+        --cor-escura:#1f1f1f;
+        --cor-clara:#fffaf4;
+        --cor-acento:#ffc107;/* amarelo mostarda */
+      }
+      body{background:var(--cor-clara);} 
+      .navbar{box-shadow:0 2px 12px rgba(0,0,0,.06);}  
+      .brand-acento{color:var(--cor-primaria)}
+
+      /* --- HERO (Destaque de Promoção) --- */
+      .hero-oferta{ 
+        min-height: calc(100vh - 72px); /* praticamente a tela toda */
+        background: radial-gradient(1200px 600px at 85% 10%, rgba(255,193,7,.15), transparent 60%),
+                    linear-gradient(180deg, #fff7ed 0%, #fff1e6 100%);
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-etiqueta{
+        display:inline-flex;gap:.5rem;align-items:center;
+        background:var(--cor-primaria);color:#fff;border-radius:999px;
+        padding:.4rem .9rem;font-weight:600;font-size:.9rem;
+      }
+      .hero-titulo{font-size:clamp(2rem, 4vw + .5rem, 4rem);font-weight:800;line-height:1.05;}
+      .hero-sub{font-size:clamp(1rem, 1.2vw + .4rem, 1.25rem);color:#5c5c5c}
+      .hero-preco{font-size:clamp(1.5rem, 2.2vw + .6rem, 2.5rem);font-weight:800;color:var(--cor-primaria)}
+      .selo-off{background:var(--cor-acento); color:#222; border-radius:.5rem; padding:.25rem .5rem; font-weight:700;}
+      .onda{position:absolute; inset:auto 0 0 0; height:60px; background:linear-gradient(180deg, transparent 0, rgba(0,0,0,.04) 100%)}
+
+      /* --- Cards de produtos (sem imagem real, apenas layout) --- */
+      .card-produto{border:none; box-shadow:0 8px 24px rgba(0,0,0,.05); border-radius:1rem; height:100%;}
+      .card-produto .thumb{ height:160px; border-radius:1rem 1rem 0 0; background:repeating-linear-gradient(45deg, #f3f3f3, #f3f3f3 10px, #ececec 10px, #ececec 20px);}
+      .card-produto .card-body{padding:1rem 1.1rem 1.2rem 1.1rem}
+      .preco{font-weight:800; color:var(--cor-escura)}
+      .preco s{color:#a6a6a6; font-weight:500; margin-right:.4rem}
+      .btn-add{border-color:var(--cor-primaria); color:var(--cor-primaria)}
+      .btn-add:hover{background:var(--cor-primaria); color:#fff}
+
+      /* Chips de categoria */
+      .chips{gap:.5rem}
+      .chip{border:1px solid #e9e9e9; padding:.45rem .8rem; border-radius:999px; font-weight:600; background:#fff}
+      .chip.active, .chip:hover{border-color:var(--cor-primaria); color:var(--cor-primaria)}
+
+      footer{background:#111;color:#eee}
+      .mini{font-size:.925rem;color:#777}
+    </style>
+  </head>
+  <body>
+    <!-- Navegação -->
+    <nav class="navbar navbar-expand-lg bg-white sticky-top">
+      <div class="container py-2">
+        <a class="navbar-brand fw-bold" href="#">
+          <i class="bi bi-egg-fried me-1 brand-acento"></i> Bom Dia <span class="brand-acento">Fast</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navPrincipal">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navPrincipal">
+          <ul class="navbar-nav ms-auto me-3">
+            <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
+            <li class="nav-item"><a class="nav-link" href="#cardapio">Cardápio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#manha">Café da Manhã</a></li>
+            <li class="nav-item"><a class="nav-link" href="#caseiros">Comidas Caseiras</a></li>
+            <li class="nav-item"><a class="nav-link" href="#promocoes">Promoções</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+          </ul>
+          <a class="btn btn-outline-dark" href="#pedido"><i class="bi bi-bag me-1"></i> Meu Pedido <span class="badge text-bg-dark ms-1">0</span></a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO: Produto em Destaque cobrindo quase toda a tela -->
+    <header class="hero-oferta d-flex align-items-center" id="promocoes">
+      <div class="container py-5">
+        <div class="row align-items-center g-4">
+          <div class="col-12 col-lg-7">
+            <span class="hero-etiqueta"><i class="bi bi-bolt me-1"></i> Oferta Relâmpago</span>
+            <h1 class="hero-titulo mt-3">Combo da Manhã Caseira</h1>
+            <p class="hero-sub mb-3">Pão na chapa artesanal, ovos mexidos cremosos, suco natural e café filtrado. Feito na hora, com carinho de casa.</p>
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <div class="hero-preco"><span class="me-2 text-muted"><s>R$ 28,90</s></span> R$ 19,90</div>
+              <span class="selo-off">-31%</span>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+              <a href="#pedido" class="btn btn-dark btn-lg"><i class="bi bi-lightning-charge me-1"></i> Pedir agora</a>
+              <a href="#cardapio" class="btn btn-outline-dark btn-lg">Ver cardápio</a>
+            </div>
+            <p class="mini mt-3 mb-0"><i class="bi bi-clock-history me-1"></i> Válido hoje até as 11h • Retirada ou delivery</p>
+          </div>
+          <div class="col-12 col-lg-5">
+            <!-- Espaço visual sem imagem: apenas layout -->
+            <div class="w-100 rounded-4" style="height: 380px; background: repeating-linear-gradient(45deg,#ffe8d6,#ffe8d6 12px,#ffd7b8 12px,#ffd7b8 24px);"></div>
+          </div>
+        </div>
+      </div>
+      <div class="onda"></div>
+    </header>
+
+    <!-- Filtros/Categorias -->
+    <section class="py-4" id="cardapio">
+      <div class="container">
+        <div class="d-flex flex-wrap chips">
+          <button class="chip active" type="button">Tudo</button>
+          <button class="chip" type="button">Café da Manhã</button>
+          <button class="chip" type="button">Lanches</button>
+          <button class="chip" type="button">Pratos Caseiros</button>
+          <button class="chip" type="button">Bebidas</button>
+          <button class="chip" type="button">Sobremesas</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Listagem de Produtos -->
+    <section class="py-2">
+      <div class="container">
+        <!-- Café da Manhã -->
+        <div class="d-flex align-items-center justify-content-between mb-2" id="manha">
+          <h2 class="h4 m-0">Café da Manhã</h2>
+          <a class="mini text-decoration-none" href="#">ver tudo</a>
+        </div>
+        <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 mb-4">
+          <!-- Card 1 -->
+          <div class="col">
+            <article class="card card-produto">
+              <div class="thumb"></div>
+              <div class="card-body">
+                <h3 class="h6 mb-1">Tapioca Recheada</h3>
+                <p class="mini mb-2">Queijo coalho derretido e manteiga da terra.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="preco">R$ 12,90</span>
+                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Card 2 -->
+          <div class="col">
+            <article class="card card-produto">
+              <div class="thumb"></div>
+              <div class="card-body">
+                <h3 class="h6 mb-1">Cuscuz com Ovos</h3>
+                <p class="mini mb-2">Milho flocado, macio, com ovos mexidos cremosos.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="preco">R$ 14,00</span>
+                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Card 3 -->
+          <div class="col">
+            <article class="card card-produto">
+              <div class="thumb"></div>
+              <div class="card-body">
+                <h3 class="h6 mb-1">Pão na Chapa</h3>
+                <p class="mini mb-2">Manteiga dourada e crocante por fora, macio por dentro.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="preco">R$ 8,00</span>
+                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Card 4 -->
+          <div class="col">
+            <article class="card card-produto">
+              <div class="thumb"></div>
+              <div class="card-body">
+                <h3 class="h6 mb-1">Combo Café + Pão</h3>
+                <p class="mini mb-2">Café filtrado + pão na chapa. Simples e perfeito.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="preco"><s>R$ 12,00</s> R$ 9,90</span>
+                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Comidas Caseiras e Lanches -->
+        <div class="d-flex align-items-center justify-content-between mb-2" id="caseiros">
+          <h2 class="h4 m-0">Caseiros & Lanches</h2>
+          <a class="mini text-decoration-none" href="#">ver tudo</a>
+        </div>
+        <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+          <!-- Card 5 -->
+          <div class="col">
+            <article class="card card-produto">
+              <div class="thumb"></div>
+              <div class="card-body">
+                <h3 class="h6 mb-1">PF Frango Grelhado</h3>
+                <p class="mini mb-2">Arroz, feijão, salada e batata rústica.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="preco">R$ 22,90</span>
+                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Card 6 -->
+          <div class="col">
+            <article class="card card-produto">
+              <div class="thumb"></div>
+              <div class="card-body">
+                <h3 class="h6 mb-1">Burguer Caseiro</h3>
+                <p class="mini mb-2">160g, pão de brioche e molho da casa.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="preco">R$ 24,90</span>
+                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Card 7 -->
+          <div class="col">
+            <article class="card card-produto">
+              <div class="thumb"></div>
+              <div class="card-body">
+                <h3 class="h6 mb-1">Strogonoff da Casa</h3>
+                <p class="mini mb-2">Creme suave, arroz branco e batata palha.</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="preco">R$ 26,00</span>
+                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Card 8 -->
+          <div class="col">
+            <article class="card card-produto">
+              <div class="thumb"></div>
+              <div class="card-body">
+                <h3 class="h6 mb-1">Suco Natural 300ml</h3>
+                <p class="mini mb-2">Açaí, laranja, acerola, maracujá (escolha).</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="preco">R$ 7,90</span>
+                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Informações e Contato -->
+    <section class="py-5" id="contato">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-12 col-lg-6">
+            <h2 class="h4">Sobre</h2>
+            <p class="mini">Comida rápida com sabor de casa. Ingredientes selecionados, preparo na hora e combos do café da manhã ao jantar.</p>
+            <ul class="mini list-unstyled mb-0">
+              <li><i class="bi bi-geo-alt me-2"></i> Av. Exemplo, 123 – Bairro, Cidade/UF</li>
+              <li><i class="bi bi-clock me-2"></i> Seg–Sáb: 6h às 22h • Dom: 7h às 14h</li>
+              <li><i class="bi bi-telephone me-2"></i> (91) 9 0000-0000</li>
+            </ul>
+          </div>
+          <div class="col-12 col-lg-6">
+            <h2 class="h4">Formas de Entrega</h2>
+            <div class="d-flex flex-wrap gap-2 mini">
+              <span class="chip">Retirada</span>
+              <span class="chip">Delivery Próprio</span>
+              <span class="chip">App Parceiro</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-4">
+      <div class="container text-center">
+        <small class="text-secondary">© <span id="ano"></span> Bom Dia Fast — Todos os direitos reservados</small>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // atualiza ano no rodapé
+      document.getElementById('ano').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
