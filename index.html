@@ -79,7 +79,12 @@
             <li class="nav-item"><a class="nav-link" href="#promocoes">Promoções</a></li>
             <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
           </ul>
-          <a class="btn btn-outline-dark" href="#pedido"><i class="bi bi-bag me-1"></i> Meu Pedido <span class="badge text-bg-dark ms-1">0</span></a>
+          <a class="btn btn-outline-dark" data-bs-toggle="offcanvas" href="#carrinhoOffcanvas" role="button">
+  <i class="bi bi-bag me-1"></i> Meu Pedido
+  <span id="itemCount" class="badge text-bg-dark ms-1">0</span>
+</a>
+<script src="/js/cart-logic.js"></script>
+<script src="/js/cart-loader.js" defer></script>
         </div>
       </div>
     </nav>
@@ -91,20 +96,20 @@
           <div class="col-12 col-lg-7">
             <span class="hero-etiqueta"><i class="bi bi-bolt me-1"></i> Oferta Relâmpago</span>
             <h1 class="hero-titulo mt-3">Combo da Manhã Caseira</h1>
-            <p class="hero-sub mb-3">Pão na chapa artesanal, ovos mexidos cremosos, suco natural e café filtrado. Feito na hora, com carinho de casa.</p>
+            <p class="hero-sub mb-3">Duas tapiocas molhadas com Cuscuz. Feito na hora, com carinho de casa.</p>
             <div class="d-flex align-items-center gap-3 mb-4">
-              <div class="hero-preco"><span class="me-2 text-muted"><s>R$ 28,90</s></span> R$ 19,90</div>
-              <span class="selo-off">-31%</span>
+              <div class="hero-preco"><span class="me-2 text-muted"><s>R$ 23,00</s></span> R$ 19,00</div>
+              <span class="selo-off">-17%</span>
             </div>
             <div class="d-flex flex-wrap gap-2">
               <a href="#pedido" class="btn btn-dark btn-lg"><i class="bi bi-lightning-charge me-1"></i> Pedir agora</a>
               <a href="#cardapio" class="btn btn-outline-dark btn-lg">Ver cardápio</a>
             </div>
-            <p class="mini mt-3 mb-0"><i class="bi bi-clock-history me-1"></i> Válido hoje até as 11h • Retirada ou delivery</p>
+            <p class="mini mt-3 mb-0"><i class="bi bi-clock-history me-1"></i> Válido até esse domingo • Retirada ou delivery</p>
           </div>
           <div class="col-12 col-lg-5">
             <!-- Espaço visual sem imagem: apenas layout -->
-            <div class="w-100 rounded-4" style="height: 380px; background: repeating-linear-gradient(45deg,#ffe8d6,#ffe8d6 12px,#ffd7b8 12px,#ffd7b8 24px);"></div>
+            <img src="images/promo sem fundo.png" alt="Tapioca Molhada" class="img-fluid">
           </div>
         </div>
       </div>
@@ -139,10 +144,11 @@
             <article class="card card-produto">
               <div class="thumb"></div>
               <div class="card-body">
-                <h3 class="h6 mb-1">Tapioca Recheada</h3>
-                <p class="mini mb-2">Queijo coalho derretido e manteiga da terra.</p>
+                <img src="images/Tapioca molhada.jpg" alt="Tapioca Molhada" class="img-fluid">
+                <h3 class="h6 mb-1">Tapioca Molhada</h3>
+                <p class="mini mb-2"></p>
                 <div class="d-flex align-items-center justify-content-between">
-                  <span class="preco">R$ 12,90</span>
+                  <span class="preco">R$ 4,00</span>
                   <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
                 </div>
               </div>
@@ -153,10 +159,11 @@
             <article class="card card-produto">
               <div class="thumb"></div>
               <div class="card-body">
-                <h3 class="h6 mb-1">Cuscuz com Ovos</h3>
-                <p class="mini mb-2">Milho flocado, macio, com ovos mexidos cremosos.</p>
+                <img src="images/Tapioca com manteiga.jpg" alt="Tapioca Molhada" class="img-fluid">
+                <h3 class="h6 mb-1">Tapioca com Manteiga</h3>
+                <p class="mini mb-2"></p>
                 <div class="d-flex align-items-center justify-content-between">
-                  <span class="preco">R$ 14,00</span>
+                  <span class="preco">R$ 4,00</span>
                   <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
                 </div>
               </div>
@@ -167,10 +174,11 @@
             <article class="card card-produto">
               <div class="thumb"></div>
               <div class="card-body">
-                <h3 class="h6 mb-1">Pão na Chapa</h3>
-                <p class="mini mb-2">Manteiga dourada e crocante por fora, macio por dentro.</p>
+                <img src="images/Pão Caseiro.jpg" alt="Tapioca Molhada" class="img-fluid">
+                <h3 class="h6 mb-1">Pão Caseiro</h3>
+                <p class="mini mb-2"></p>
                 <div class="d-flex align-items-center justify-content-between">
-                  <span class="preco">R$ 8,00</span>
+                  <span class="preco">R$ 15,00</span>
                   <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
                 </div>
               </div>
@@ -181,10 +189,11 @@
             <article class="card card-produto">
               <div class="thumb"></div>
               <div class="card-body">
-                <h3 class="h6 mb-1">Combo Café + Pão</h3>
-                <p class="mini mb-2">Café filtrado + pão na chapa. Simples e perfeito.</p>
+                <img src="images/Cuscuz.jpg" alt="Tapioca Molhada" class="img-fluid">
+                <h3 class="h6 mb-1">Cuscuz</h3>
+                <p class="mini mb-2"></p>
                 <div class="d-flex align-items-center justify-content-between">
-                  <span class="preco"><s>R$ 12,00</s> R$ 9,90</span>
+                  <span class="preco"><s>R$ 20,00</s> R$ 15,00</span>
                   <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
                 </div>
               </div>
@@ -194,7 +203,7 @@
 
         <!-- Comidas Caseiras e Lanches -->
         <div class="d-flex align-items-center justify-content-between mb-2" id="caseiros">
-          <h2 class="h4 m-0">Caseiros & Lanches</h2>
+          <h2 class="h4 m-0"></h2>
           <a class="mini text-decoration-none" href="#">ver tudo</a>
         </div>
         <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
@@ -203,10 +212,11 @@
             <article class="card card-produto">
               <div class="thumb"></div>
               <div class="card-body">
-                <h3 class="h6 mb-1">PF Frango Grelhado</h3>
-                <p class="mini mb-2">Arroz, feijão, salada e batata rústica.</p>
+                <img src="images/Empada.jpg" alt="Tapioca Molhada" class="img-fluid">
+                <h3 class="h6 mb-1">Empada</h3>
+                <p class="mini mb-2"></p>
                 <div class="d-flex align-items-center justify-content-between">
-                  <span class="preco">R$ 22,90</span>
+                  <span class="preco">R$ 3,00</span>
                   <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
                 </div>
               </div>
@@ -217,10 +227,11 @@
             <article class="card card-produto">
               <div class="thumb"></div>
               <div class="card-body">
-                <h3 class="h6 mb-1">Burguer Caseiro</h3>
-                <p class="mini mb-2">160g, pão de brioche e molho da casa.</p>
+                <img src="images/Bolo de Chocolate 20.jpg" alt="Tapioca Molhada" class="img-fluid">
+                <h3 class="h6 mb-1">Bolo de Chocolate</h3>
+                <p class="mini mb-2"></p>
                 <div class="d-flex align-items-center justify-content-between">
-                  <span class="preco">R$ 24,90</span>
+                  <span class="preco">R$ 20,00</span>
                   <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
                 </div>
               </div>
@@ -231,10 +242,11 @@
             <article class="card card-produto">
               <div class="thumb"></div>
               <div class="card-body">
-                <h3 class="h6 mb-1">Strogonoff da Casa</h3>
-                <p class="mini mb-2">Creme suave, arroz branco e batata palha.</p>
+                <img src="images/Bolo Formigueiro.jpg" alt="Tapioca Molhada" class="img-fluid">
+                <h3 class="h6 mb-1">Bolo Formigueiro</h3>
+                <p class="mini mb-2"></p>
                 <div class="d-flex align-items-center justify-content-between">
-                  <span class="preco">R$ 26,00</span>
+                  <span class="preco">R$ 20,00</span>
                   <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
                 </div>
               </div>
@@ -245,10 +257,26 @@
             <article class="card card-produto">
               <div class="thumb"></div>
               <div class="card-body">
-                <h3 class="h6 mb-1">Suco Natural 300ml</h3>
-                <p class="mini mb-2">Açaí, laranja, acerola, maracujá (escolha).</p>
+                <img src="images/Bolo de milho.jpg" alt="Tapioca Molhada" class="img-fluid">
+                <h3 class="h6 mb-1">Bolo de Milho</h3>
+                <p class="mini mb-2"></p>
                 <div class="d-flex align-items-center justify-content-between">
-                  <span class="preco">R$ 7,90</span>
+                  <span class="preco">R$ 20,00</span>
+                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Card 9 -->
+          <div class="col">
+            <article class="card card-produto">
+              <div class="thumb"></div>
+              <div class="card-body">
+                <img src="images/Bolo de milho mini 2. 5 reais.jpg" alt="Tapioca Molhada" class="img-fluid">
+                <h3 class="h6 mb-1">Bolo de Milho Mini</h3>
+                <p class="mini mb-2"></p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="preco">R$ 5,00</span>
                   <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
                 </div>
               </div>
@@ -264,11 +292,11 @@
         <div class="row g-4">
           <div class="col-12 col-lg-6">
             <h2 class="h4">Sobre</h2>
-            <p class="mini">Comida rápida com sabor de casa. Ingredientes selecionados, preparo na hora e combos do café da manhã ao jantar.</p>
+            <p class="mini">Comida rápida com sabor de casa. Tudo é feito na hora!</p>
             <ul class="mini list-unstyled mb-0">
-              <li><i class="bi bi-geo-alt me-2"></i> Av. Exemplo, 123 – Bairro, Cidade/UF</li>
-              <li><i class="bi bi-clock me-2"></i> Seg–Sáb: 6h às 22h • Dom: 7h às 14h</li>
-              <li><i class="bi bi-telephone me-2"></i> (91) 9 0000-0000</li>
+              <li><i class="bi bi-geo-alt me-2"></i> Rua Santa Izabel, 277 – Bairro: Cruzeiro (Icoaraci), Belém/PA.</li>
+              <li><i class="bi bi-clock me-2"></i> Dom: 6h às 12h</li>
+              <li><i class="bi bi-telephone me-2"></i> (91) 9 8165-4787</li>
             </ul>
           </div>
         </div>
