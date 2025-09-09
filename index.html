@@ -58,6 +58,8 @@
 
       footer{background:#111;color:#eee}
       .mini{font-size:.925rem;color:#777}
+
+      
     </style>
   </head>
   <body>
@@ -82,8 +84,7 @@
           <a class="btn btn-outline-dark" data-bs-toggle="offcanvas" href="#carrinhoOffcanvas" role="button">
   <i class="bi bi-bag me-1"></i> Meu Pedido
   <span id="itemCount" class="badge text-bg-dark ms-1">0</span>
-</a>
-<script src="/js/cart-logic.js"></script>
+</a><script src="/js/cart-logic.js"></script>
 <script src="/js/cart-loader.js" defer></script>
         </div>
       </div>
@@ -116,33 +117,18 @@
       <div class="onda"></div>
     </header>
 
-    <!-- Filtros/Categorias -->
-    <section class="py-4" id="cardapio">
-      <div class="container">
-        <div class="d-flex flex-wrap chips">
-          <button class="chip active" type="button">Tudo</button>
-          <button class="chip" type="button">Café da Manhã</button>
-          <button class="chip" type="button">Lanches</button>
-          <button class="chip" type="button">Pratos Caseiros</button>
-          <button class="chip" type="button">Bebidas</button>
-          <button class="chip" type="button">Sobremesas</button>
-        </div>
-      </div>
-    </section>
-
     <!-- Listagem de Produtos -->
     <section class="py-2">
       <div class="container">
         <!-- Café da Manhã -->
         <div class="d-flex align-items-center justify-content-between mb-2" id="manha">
           <h2 class="h4 m-0">Café da Manhã</h2>
-          <a class="mini text-decoration-none" href="#">ver tudo</a>
         </div>
         <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 mb-4">
           <!-- Card 1 -->
           <div class="col">
             <article class="card card-produto">
-              <div class="thumb"></div>
+            
               <div class="card-body">
                 <img src="images/Tapioca molhada.jpg" alt="Tapioca Molhada" class="img-fluid">
                 <h3 class="h6 mb-1">Tapioca Molhada</h3>
@@ -157,7 +143,6 @@
           <!-- Card 2 -->
           <div class="col">
             <article class="card card-produto">
-              <div class="thumb"></div>
               <div class="card-body">
                 <img src="images/Tapioca com manteiga.jpg" alt="Tapioca Molhada" class="img-fluid">
                 <h3 class="h6 mb-1">Tapioca com Manteiga</h3>
@@ -172,7 +157,6 @@
           <!-- Card 3 -->
           <div class="col">
             <article class="card card-produto">
-              <div class="thumb"></div>
               <div class="card-body">
                 <img src="images/Pão Caseiro.jpg" alt="Tapioca Molhada" class="img-fluid">
                 <h3 class="h6 mb-1">Pão Caseiro</h3>
@@ -187,7 +171,6 @@
           <!-- Card 4 -->
           <div class="col">
             <article class="card card-produto">
-              <div class="thumb"></div>
               <div class="card-body">
                 <img src="images/Cuscuz.jpg" alt="Tapioca Molhada" class="img-fluid">
                 <h3 class="h6 mb-1">Cuscuz</h3>
@@ -202,15 +185,11 @@
         </div>
 
         <!-- Comidas Caseiras e Lanches -->
-        <div class="d-flex align-items-center justify-content-between mb-2" id="caseiros">
-          <h2 class="h4 m-0"></h2>
-          <a class="mini text-decoration-none" href="#">ver tudo</a>
-        </div>
         <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
           <!-- Card 5 -->
           <div class="col">
             <article class="card card-produto">
-              <div class="thumb"></div>
+
               <div class="card-body">
                 <img src="images/Empada.jpg" alt="Tapioca Molhada" class="img-fluid">
                 <h3 class="h6 mb-1">Empada</h3>
@@ -225,7 +204,6 @@
           <!-- Card 6 -->
           <div class="col">
             <article class="card card-produto">
-              <div class="thumb"></div>
               <div class="card-body">
                 <img src="images/Bolo de Chocolate 20.jpg" alt="Tapioca Molhada" class="img-fluid">
                 <h3 class="h6 mb-1">Bolo de Chocolate</h3>
@@ -240,7 +218,6 @@
           <!-- Card 7 -->
           <div class="col">
             <article class="card card-produto">
-              <div class="thumb"></div>
               <div class="card-body">
                 <img src="images/Bolo Formigueiro.jpg" alt="Tapioca Molhada" class="img-fluid">
                 <h3 class="h6 mb-1">Bolo Formigueiro</h3>
@@ -255,7 +232,6 @@
           <!-- Card 8 -->
           <div class="col">
             <article class="card card-produto">
-              <div class="thumb"></div>
               <div class="card-body">
                 <img src="images/Bolo de milho.jpg" alt="Tapioca Molhada" class="img-fluid">
                 <h3 class="h6 mb-1">Bolo de Milho</h3>
@@ -270,7 +246,6 @@
           <!-- Card 9 -->
           <div class="col">
             <article class="card card-produto">
-              <div class="thumb"></div>
               <div class="card-body">
                 <img src="images/Bolo de milho mini 2. 5 reais.jpg" alt="Tapioca Molhada" class="img-fluid">
                 <h3 class="h6 mb-1">Bolo de Milho Mini</h3>
