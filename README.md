@@ -12,6 +12,8 @@ Diosne Marlon Furtado dos Santos
 
 Kauan Leandro Gonçalves de Araujo Moreira
 
+acesse o site em: https://faastfood.netlify.app/
+
 ---
 
 ## Funcionalidades Adicionadas no Site até o Momento 🚀
