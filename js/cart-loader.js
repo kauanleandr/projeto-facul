@@ -1,5 +1,4 @@
-// /js/cart-loader.js
-
+// carrega o HTML do carrinho (offcanvas) via fetch
 (async () => {
   try {
     const resp = await fetch('/partials/cart-offcanvas.html', { cache: 'no-cache' });
