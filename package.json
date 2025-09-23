@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "echo \"Error: no test specified\" && exit 1"
+    "start": "echo \"This is a static website. Please use Live Server extension in VS Code to run the project. Open index.html with 'Open with Live Server'.\""
   },
   "keywords": [],
   "author": "",
