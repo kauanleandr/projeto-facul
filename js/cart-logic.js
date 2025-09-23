@@ -1,87 +1,359 @@
-// /js/cart-logic.js
-
-// Carrinho (global p/ outros scripts acessarem se quiserem)
+// Sistema de carrinho moderno e completo
 window.carrinho = [];
 
-// Atualiza UI do carrinho
-window.atualizarCarrinho = function atualizarCarrinho() {
-  const carrinhoDiv = document.getElementById('carrinhoProdutos');
-  const itemCount   = document.getElementById('itemCount');
-  const totalPreco  = document.getElementById('totalPreco');
+// Função para formatar preço
+function formatarPreco(valor) {
+  return valor.toFixed(2).replace('.', ',');
+}
 
-  if (!carrinhoDiv || !totalPreco) return; // Offcanvas ainda não carregado
+// Função para extrair preço do texto (lida com promoções)
+function extrairPreco(precoTexto) {
+  // Remove "R$" e espaços, pega o último valor (caso tenha promoção)
+  const matches = precoTexto.match(/R\$\s*([\d,]+)/g);
+  if (matches && matches.length > 0) {
+    const ultimoPreco = matches[matches.length - 1];
+    return parseFloat(ultimoPreco.replace('R$', '').replace(',', '.').trim());
+  }
+  return 0;
+}
+
+// Atualizar interface do carrinho
+window.atualizarCarrinho = function() {
+  const carrinhoDiv = document.getElementById('carrinhoProdutos');
+  const itemCount = document.getElementById('itemCount');
+  const totalPreco = document.getElementById('totalPreco');
+  const continuarBtn = document.getElementById('continuarPedido');
+
+  if (!carrinhoDiv || !totalPreco) return;
 
   carrinhoDiv.innerHTML = '';
   let total = 0;
 
-  window.carrinho.forEach(item => {
-    const produtoDiv = document.createElement('div');
-    produtoDiv.className = 'd-flex justify-content-between align-items-center mb-3';
-    produtoDiv.innerHTML = `
-      <span>${item.nome}</span> 
-      <span>R$ ${item.preco.toFixed(2)}</span>
-      <button class="btn btn-sm btn-danger" onclick="removerProduto(${item.id})">Remover</button>
+  if (window.carrinho.length === 0) {
+    carrinhoDiv.innerHTML = `
+      <div class="text-center py-4">
+        <i class="bi bi-bag text-muted" style="font-size: 3rem;"></i>
+        <p class="text-muted mt-2 mb-0">Seu carrinho está vazio</p>
+        <small class="text-muted">Adicione alguns produtos deliciosos!</small>
+      </div>
     `;
-    carrinhoDiv.appendChild(produtoDiv);
-    total += item.preco;
+  } else {
+    window.carrinho.forEach((item, index) => {
+      const produtoDiv = document.createElement('div');
+      produtoDiv.className = 'card mb-3';
+      produtoDiv.innerHTML = `
+        <div class="card-body p-3">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="flex-grow-1">
+              <h6 class="card-title mb-1">${item.nome}</h6>
+              <p class="text-primary fw-bold mb-2">R$ ${formatarPreco(item.preco)}</p>
+              <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-outline-secondary btn-sm" onclick="alterarQuantidade(${index}, -1)">
+                  <i class="bi bi-dash"></i>
+                </button>
+                <span class="fw-bold">${item.quantidade}</span>
+                <button class="btn btn-outline-secondary btn-sm" onclick="alterarQuantidade(${index}, 1)">
+                  <i class="bi bi-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="text-end">
+              <button class="btn btn-outline-danger btn-sm" onclick="removerProduto(${index})" title="Remover item">
+                <i class="bi bi-trash"></i>
+              </button>
+              <div class="mt-2">
+                <small class="text-muted">Subtotal:</small><br>
+                <strong class="text-primary">R$ ${formatarPreco(item.preco * item.quantidade)}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      carrinhoDiv.appendChild(produtoDiv);
+      total += item.preco * item.quantidade;
+    });
+  }
+
+  if (itemCount) itemCount.textContent = window.carrinho.reduce((sum, item) => sum + item.quantidade, 0);
+  totalPreco.textContent = formatarPreco(total);
+  
+  if (continuarBtn) {
+    continuarBtn.disabled = window.carrinho.length === 0;
+  }
+};
+
+// Adicionar produto ao carrinho
+window.adicionarProduto = function(nome, preco) {
+  const itemExistente = window.carrinho.find(item => item.nome === nome);
+  
+  if (itemExistente) {
+    itemExistente.quantidade += 1;
+  } else {
+    window.carrinho.push({
+      nome: nome,
+      preco: preco,
+      quantidade: 1
+    });
+  }
+  
+  window.atualizarCarrinho();
+  
+  // Feedback visual
+  mostrarNotificacao(`${nome} adicionado ao carrinho!`, 'success');
+};
+
+// Alterar quantidade
+window.alterarQuantidade = function(index, delta) {
+  if (window.carrinho[index]) {
+    window.carrinho[index].quantidade += delta;
+    
+    if (window.carrinho[index].quantidade <= 0) {
+      window.carrinho.splice(index, 1);
+    }
+    
+    window.atualizarCarrinho();
+  }
+};
+
+// Remover produto
+window.removerProduto = function(index) {
+  if (window.carrinho[index]) {
+    const nomeItem = window.carrinho[index].nome;
+    window.carrinho.splice(index, 1);
+    window.atualizarCarrinho();
+    mostrarNotificacao(`${nomeItem} removido do carrinho`, 'info');
+  }
+};
+
+// Mostrar notificação
+function mostrarNotificacao(mensagem, tipo = 'info') {
+  // Remove notificação existente
+  const existente = document.querySelector('.toast-notification');
+  if (existente) existente.remove();
+
+  const toast = document.createElement('div');
+  toast.className = `toast-notification alert alert-${tipo === 'success' ? 'success' : 'info'} position-fixed`;
+  toast.style.cssText = `
+    top: 100px; 
+    right: 20px; 
+    z-index: 9999; 
+    min-width: 300px;
+    animation: slideIn 0.3s ease;
+  `;
+  toast.innerHTML = `
+    <div class="d-flex align-items-center">
+      <i class="bi bi-${tipo === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+      ${mensagem}
+    </div>
+  `;
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// Função para gerar mensagem do WhatsApp
+function gerarMensagemWhatsApp() {
+  const nome = document.getElementById('nomeCliente').value;
+  const telefone = document.getElementById('telefoneCliente').value;
+  const endereco = document.getElementById('enderecoCliente').value;
+  const formaPagamento = document.getElementById('formaPagamento').value;
+  const valorTroco = document.getElementById('valorTroco').value;
+
+  let mensagem = `🍔 *PEDIDO - BOM DIA FAST* 🍔\n\n`;
+  mensagem += `👤 *Cliente:* ${nome}\n`;
+  mensagem += `📱 *Telefone:* ${telefone}\n`;
+  mensagem += `📍 *Endereço:* ${endereco}\n\n`;
+  
+  mensagem += `🛍️ *ITENS DO PEDIDO:*\n`;
+  let total = 0;
+  
+  window.carrinho.forEach(item => {
+    const subtotal = item.preco * item.quantidade;
+    mensagem += `• ${item.quantidade}x ${item.nome} - R$ ${formatarPreco(subtotal)}\n`;
+    total += subtotal;
   });
+  
+  mensagem += `\n💰 *TOTAL: R$ ${formatarPreco(total)}*\n\n`;
+  
+  mensagem += `💳 *Forma de pagamento:* `;
+  switch(formaPagamento) {
+    case 'pix':
+      mensagem += `PIX\n\n🔑 *Chave PIX:* (91) 9 8165-4787\n📱 *Nome:* Bom Dia Fast`;
+      break;
+    case 'dinheiro':
+      mensagem += `Dinheiro`;
+      if (valorTroco) {
+        mensagem += ` (Troco para R$ ${valorTroco})`;
+      }
+      break;
+    case 'cartao':
+      mensagem += `Cartão (na entrega)`;
+      break;
+  }
+  
+  mensagem += `\n\n✅ Pedido confirmado! Aguarde nosso contato para confirmar o tempo de entrega.`;
+  
+  return encodeURIComponent(mensagem);
+}
 
-  if (itemCount) itemCount.textContent = window.carrinho.length;
-  totalPreco.textContent = total.toFixed(2);
-};
+// Validar formulário
+function validarFormulario() {
+  const nome = document.getElementById('nomeCliente').value.trim();
+  const telefone = document.getElementById('telefoneCliente').value.trim();
+  const endereco = document.getElementById('enderecoCliente').value.trim();
+  const formaPagamento = document.getElementById('formaPagamento').value;
 
-// Adiciona/Remove
-window.adicionarProduto = function adicionarProduto(id, nome, preco) {
-  window.carrinho.push({ id, nome, preco });
-  window.atualizarCarrinho();
-};
+  if (!nome || !telefone || !endereco || !formaPagamento) {
+    mostrarNotificacao('Por favor, preencha todos os campos obrigatórios', 'warning');
+    return false;
+  }
 
-window.removerProduto = function removerProduto(id) {
-  window.carrinho = window.carrinho.filter(item => item.id !== id);
-  window.atualizarCarrinho();
-};
+  if (telefone.length < 10) {
+    mostrarNotificacao('Por favor, insira um número de telefone válido', 'warning');
+    return false;
+  }
 
-// Liga os botões "Adicionar" (cards) e demais detalhes da página
+  return true;
+}
+
+// Configurar eventos quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
-  // contador de ano do rodapé (se existir)
-  const ano = document.getElementById('ano');
-  if (ano) ano.textContent = new Date().getFullYear();
-
-  // listeners nos botões dos cards
-  document.querySelectorAll('.btn-add').forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      const card  = btn.closest('.card-produto');
-      const nome  = card.querySelector('h3').textContent;
-      const precoTexto = card.querySelector('.preco').textContent.trim();
-      const preco = parseFloat(precoTexto.replace('R$', '').replace(/\s/g,'').replace(',', '.'));
-      window.adicionarProduto(index, nome, preco);
-
-      // opcional: abrir o offcanvas ao adicionar
-      // const ocEl = document.getElementById('carrinhoOffcanvas');
-      // if (ocEl) new bootstrap.Offcanvas(ocEl).show();
+  // Configurar botões dos produtos
+  document.querySelectorAll('.btn-add').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const card = btn.closest('.card-produto');
+      const nome = card.dataset.nome || card.querySelector('h3').textContent.trim();
+      const precoTexto = card.querySelector('.preco').textContent;
+      const preco = extrairPreco(precoTexto);
+      
+      window.adicionarProduto(nome, preco);
     });
   });
+
+  // Atualizar carrinho inicial
+  window.atualizarCarrinho();
 });
 
-// Esta função será chamada quando o fragmento HTML do carrinho for injetado
-window.attachFinalizeHandler = function attachFinalizeHandler() {
-  const btnFinalizar = document.getElementById('finalizarPedido');
-  if (!btnFinalizar) return;
+// Função chamada quando o offcanvas é carregado
+window.attachFinalizeHandler = function() {
+  const continuarBtn = document.getElementById('continuarPedido');
+  const voltarBtn = document.getElementById('voltarCarrinho');
+  const finalizarBtn = document.getElementById('finalizarPedido');
+  const formaPagamentoSelect = document.getElementById('formaPagamento');
+  const trocoDiv = document.getElementById('trocoDiv');
+  const formCliente = document.getElementById('formCliente');
+  const botoesCarrinho = document.getElementById('botoesCarrinho');
 
-  // Evita múltiplos handlers ao re-injetar
-  btnFinalizar.replaceWith(btnFinalizar.cloneNode(true));
-  const novoBtn = document.getElementById('finalizarPedido');
+  if (!continuarBtn) return;
 
-  novoBtn.addEventListener('click', () => {
+  // Remover listeners existentes
+  const novoContinuarBtn = continuarBtn.cloneNode(true);
+  continuarBtn.parentNode.replaceChild(novoContinuarBtn, continuarBtn);
+
+  // Evento para continuar pedido
+  novoContinuarBtn.addEventListener('click', () => {
     if (window.carrinho.length === 0) {
-      alert('Seu carrinho está vazio!');
-    } else {
-      alert('Pedido finalizado!');
-      window.carrinho = [];
-      window.atualizarCarrinho();
+      mostrarNotificacao('Adicione itens ao carrinho primeiro!', 'warning');
+      return;
     }
+    
+    formCliente.style.display = 'block';
+    botoesCarrinho.style.display = 'none';
   });
 
-  // Atualiza UI caso já tenha itens antes do offcanvas carregar
+  // Evento para voltar ao carrinho
+  if (voltarBtn) {
+    voltarBtn.addEventListener('click', () => {
+      formCliente.style.display = 'none';
+      botoesCarrinho.style.display = 'block';
+    });
+  }
+
+  // Evento para mostrar/ocultar campo de troco
+  if (formaPagamentoSelect) {
+    formaPagamentoSelect.addEventListener('change', (e) => {
+      if (e.target.value === 'dinheiro') {
+        trocoDiv.style.display = 'block';
+      } else {
+        trocoDiv.style.display = 'none';
+      }
+    });
+  }
+
+  // Evento para finalizar pedido
+  if (finalizarBtn) {
+    finalizarBtn.addEventListener('click', () => {
+      if (!validarFormulario()) return;
+
+      const mensagem = gerarMensagemWhatsApp();
+      const numeroWhatsApp = '5591981654787';
+      const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+      
+      // Abrir WhatsApp
+      window.open(urlWhatsApp, '_blank');
+      
+      // Limpar carrinho após envio
+      setTimeout(() => {
+        window.carrinho = [];
+        window.atualizarCarrinho();
+        
+        // Resetar formulário
+        document.getElementById('nomeCliente').value = '';
+        document.getElementById('telefoneCliente').value = '';
+        document.getElementById('enderecoCliente').value = '';
+        document.getElementById('formaPagamento').value = '';
+        document.getElementById('valorTroco').value = '';
+        
+        // Voltar para tela inicial do carrinho
+        formCliente.style.display = 'none';
+        botoesCarrinho.style.display = 'block';
+        
+        mostrarNotificacao('Pedido enviado! Aguarde nosso contato.', 'success');
+      }, 1000);
+    });
+  }
+
+  // Máscara para telefone
+  const telefoneInput = document.getElementById('telefoneCliente');
+  if (telefoneInput) {
+    telefoneInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 11) {
+        value = value.replace(/(\d{2})(\d{1})(\d{4})(\d{4})/, '($1) $2 $3-$4');
+      } else if (value.length >= 7) {
+        value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+      } else if (value.length >= 3) {
+        value = value.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+      }
+      e.target.value = value;
+    });
+  }
+
+  // Atualizar carrinho
   window.atualizarCarrinho();
 };
+
+// Adicionar estilos para animações
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+  }
+  
+  .toast-notification {
+    border-left: 4px solid currentColor;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+`;
+document.head.appendChild(style);

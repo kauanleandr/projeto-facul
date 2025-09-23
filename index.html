@@ -11,248 +11,634 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
       :root{
-        --cor-primaria:#ff3d00;/* laranja fastfood */
-        --cor-escura:#1f1f1f;
-        --cor-clara:#fffaf4;
-        --cor-acento:#ffc107;/* amarelo mostarda */
+        --cor-primaria: #ff6b35;
+        --cor-primaria-hover: #e55a2b;
+        --cor-escura: #1a1a1a;
+        --cor-clara: #fefefe;
+        --cor-acento: #ffc107;
+        --cor-sucesso: #10b981;
+        --cor-cinza-claro: #f8fafc;
+        --cor-cinza-medio: #64748b;
+        --cor-cinza-escuro: #334155;
+        --sombra-suave: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --sombra-media: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --sombra-forte: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        --border-radius: 12px;
+        --border-radius-lg: 16px;
       }
-      body{background:var(--cor-clara);} 
-      .navbar{box-shadow:0 2px 12px rgba(0,0,0,.06);}  
-      .brand-acento{color:var(--cor-primaria)}
 
-      /* --- HERO (Destaque de Promoção) --- */
-      .hero-oferta{ 
-        min-height: calc(100vh - 72px); /* praticamente a tela toda */
-        background: radial-gradient(1200px 600px at 85% 10%, rgba(255,193,7,.15), transparent 60%),
-                    linear-gradient(180deg, #fff7ed 0%, #fff1e6 100%);
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--cor-clara);
+        line-height: 1.6;
+        color: var(--cor-escura);
+      }
+
+      /* Navbar moderna */
+      .navbar {
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: var(--sombra-suave);
+        transition: all 0.3s ease;
+      }
+
+      .navbar-brand {
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: var(--cor-escura) !important;
+      }
+
+      .brand-acento {
+        color: var(--cor-primaria) !important;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        color: var(--cor-cinza-escuro) !important;
+        transition: color 0.2s ease;
+        position: relative;
+      }
+
+      .nav-link:hover {
+        color: var(--cor-primaria) !important;
+      }
+
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 50%;
+        background: var(--cor-primaria);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      /* Botão do carrinho moderno */
+      .btn-cart {
+        background: var(--cor-primaria);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--border-radius);
+        transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
       }
-      .hero-etiqueta{
-        display:inline-flex;gap:.5rem;align-items:center;
-        background:var(--cor-primaria);color:#fff;border-radius:999px;
-        padding:.4rem .9rem;font-weight:600;font-size:.9rem;
+
+      .btn-cart:hover {
+        background: var(--cor-primaria-hover);
+        transform: translateY(-2px);
+        box-shadow: var(--sombra-media);
+        color: white;
       }
-      .hero-titulo{font-size:clamp(2rem, 4vw + .5rem, 4rem);font-weight:800;line-height:1.05;}
-      .hero-sub{font-size:clamp(1rem, 1.2vw + .4rem, 1.25rem);color:#5c5c5c}
-      .hero-preco{font-size:clamp(1.5rem, 2.2vw + .6rem, 2.5rem);font-weight:800;color:var(--cor-primaria)}
-      .selo-off{background:var(--cor-acento); color:#222; border-radius:.5rem; padding:.25rem .5rem; font-weight:700;}
-      .onda{position:absolute; inset:auto 0 0 0; height:60px; background:linear-gradient(180deg, transparent 0, rgba(0,0,0,.04) 100%)}
 
-      /* --- Cards de produtos (sem imagem real, apenas layout) --- */
-      .card-produto{border:none; box-shadow:0 8px 24px rgba(0,0,0,.05); border-radius:1rem; height:100%;}
-      .card-produto .thumb{ height:160px; border-radius:1rem 1rem 0 0; background:repeating-linear-gradient(45deg, #f3f3f3, #f3f3f3 10px, #ececec 10px, #ececec 20px);}
-      .card-produto .card-body{padding:1rem 1.1rem 1.2rem 1.1rem}
-      .preco{font-weight:800; color:var(--cor-escura)}
-      .preco s{color:#a6a6a6; font-weight:500; margin-right:.4rem}
-      .btn-add{border-color:var(--cor-primaria); color:var(--cor-primaria)}
-      .btn-add:hover{background:var(--cor-primaria); color:#fff}
+      .btn-cart .badge {
+        background: rgba(255, 255, 255, 0.2);
+        animation: pulse 2s infinite;
+      }
 
-      /* Chips de categoria */
-      .chips{gap:.5rem}
-      .chip{border:1px solid #e9e9e9; padding:.45rem .8rem; border-radius:999px; font-weight:600; background:#fff}
-      .chip.active, .chip:hover{border-color:var(--cor-primaria); color:var(--cor-primaria)}
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+      }
 
-      footer{background:#111;color:#eee}
-      .mini{font-size:.925rem;color:#777}
+      /* Hero section moderna */
+      .hero-oferta {
+        min-height: 90vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+      }
 
-      
+      .hero-oferta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-etiqueta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        border-radius: 50px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .hero-titulo {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        line-height: 1.1;
+        color: white;
+        margin: 1rem 0;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-sub {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 2rem;
+      }
+
+      .hero-preco {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .selo-off {
+        background: var(--cor-acento);
+        color: var(--cor-escura);
+        border-radius: var(--border-radius);
+        padding: 0.5rem 1rem;
+        font-weight: 700;
+        font-size: 1rem;
+      }
+
+      .btn-hero {
+        padding: 1rem 2rem;
+        font-weight: 600;
+        border-radius: var(--border-radius);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-hero-primary {
+        background: white;
+        color: var(--cor-primaria);
+        border: 2px solid white;
+      }
+
+      .btn-hero-primary:hover {
+        background: transparent;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--sombra-media);
+      }
+
+      .btn-hero-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .btn-hero-secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-color: white;
+      }
+
+      /* Cards de produtos modernos */
+      .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--cor-escura);
+        margin-bottom: 2rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--cor-primaria);
+        border-radius: 2px;
+      }
+
+      .card-produto {
+        border: none;
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: white;
+        box-shadow: var(--sombra-suave);
+        height: 100%;
+      }
+
+      .card-produto:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--sombra-forte);
+      }
+
+      .card-produto img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .card-produto:hover img {
+        transform: scale(1.05);
+      }
+
+      .card-produto .card-body {
+        padding: 1.5rem;
+      }
+
+      .card-produto h3 {
+        font-weight: 600;
+        color: var(--cor-escura);
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      .preco {
+        font-weight: 700;
+        color: var(--cor-primaria);
+        font-size: 1.25rem;
+      }
+
+      .preco s {
+        color: var(--cor-cinza-medio);
+        font-weight: 400;
+        margin-right: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .btn-add {
+        background: var(--cor-primaria);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem 1.25rem;
+        border-radius: var(--border-radius);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-add:hover {
+        background: var(--cor-primaria-hover);
+        transform: translateY(-2px);
+        box-shadow: var(--sombra-media);
+        color: white;
+      }
+
+      /* Seções com espaçamento moderno */
+      .section-padding {
+        padding: 5rem 0;
+      }
+
+      .section-bg {
+        background: var(--cor-cinza-claro);
+      }
+
+      /* Informações de contato modernas */
+      .info-card {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--sombra-suave);
+        height: 100%;
+      }
+
+      .info-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--cor-primaria);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Footer moderno */
+      footer {
+        background: var(--cor-escura);
+        color: rgba(255, 255, 255, 0.8);
+        padding: 3rem 0 2rem;
+      }
+
+      /* Responsividade aprimorada */
+      @media (max-width: 768px) {
+        .hero-oferta {
+          min-height: 70vh;
+          text-align: center;
+        }
+        
+        .hero-titulo {
+          font-size: 2.5rem;
+        }
+        
+        .btn-hero {
+          width: 100%;
+          justify-content: center;
+          margin-bottom: 1rem;
+        }
+        
+        .section-padding {
+          padding: 3rem 0;
+        }
+      }
+
+      /* Animações suaves */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Melhorias no offcanvas */
+      .offcanvas {
+        border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg);
+        box-shadow: var(--sombra-forte);
+      }
+
+      .offcanvas-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+      }
+
+      .offcanvas-title {
+        font-weight: 700;
+        color: var(--cor-escura);
+      }
+
+      .form-control, .form-select {
+        border-radius: var(--border-radius);
+        border: 2px solid #e2e8f0;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus, .form-select:focus {
+        border-color: var(--cor-primaria);
+        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+      }
+
+      .form-label {
+        font-weight: 600;
+        color: var(--cor-escura);
+        margin-bottom: 0.5rem;
+      }
     </style>
   </head>
   <body>
     <!-- Navegação -->
-    <nav class="navbar navbar-expand-lg bg-white sticky-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
       <div class="container py-2">
-        <a class="navbar-brand fw-bold" href="#">
-          <i class="bi bi-egg-fried me-1 brand-acento"></i> Bom Dia <span class="brand-acento">Fast</span>
+        <a class="navbar-brand" href="#">
+          <i class="bi bi-egg-fried me-2 brand-acento"></i> Bom Dia <span class="brand-acento">Fast</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navPrincipal">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navPrincipal">
-          <ul class="navbar-nav ms-auto me-3">
-            <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
+          <ul class="navbar-nav ms-auto me-4">
+            <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
             <li class="nav-item"><a class="nav-link" href="#cardapio">Cardápio</a></li>
             <li class="nav-item"><a class="nav-link" href="#manha">Café da Manhã</a></li>
             <li class="nav-item"><a class="nav-link" href="#caseiros">Comidas Caseiras</a></li>
-            <li class="nav-item"><a class="nav-link" href="#promocoes">Promoções</a></li>
             <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
           </ul>
-          <a class="btn btn-outline-dark" data-bs-toggle="offcanvas" href="#carrinhoOffcanvas" role="button">
-  <i class="bi bi-bag me-1"></i> Meu Pedido
-  <span id="itemCount" class="badge text-bg-dark ms-1">0</span>
-</a><script src="/js/cart-logic.js"></script>
-<script src="/js/cart-loader.js" defer></script>
+          <button class="btn btn-cart" data-bs-toggle="offcanvas" data-bs-target="#carrinhoOffcanvas">
+            <i class="bi bi-bag me-2"></i> Meu Pedido
+            <span id="itemCount" class="badge ms-2">0</span>
+          </button>
         </div>
       </div>
     </nav>
 
-    <!-- HERO: Produto em Destaque cobrindo quase toda a tela -->
-    <header class="hero-oferta d-flex align-items-center" id="promocoes">
-      <div class="container py-5">
-        <div class="row align-items-center g-4">
-          <div class="col-12 col-lg-7">
-            <span class="hero-etiqueta"><i class="bi bi-bolt me-1"></i> Oferta Relâmpago</span>
-            <h1 class="hero-titulo mt-3">Combo da Manhã Caseira</h1>
-            <p class="hero-sub mb-3">Duas tapiocas molhadas com Cuscuz. Feito na hora, com carinho de casa.</p>
+    <!-- HERO: Produto em Destaque -->
+    <header class="hero-oferta" id="inicio">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-12 col-lg-7 hero-content">
+            <span class="hero-etiqueta">
+              <i class="bi bi-lightning-charge"></i> Oferta Relâmpago
+            </span>
+            <h1 class="hero-titulo">Combo da Manhã Caseira</h1>
+            <p class="hero-sub">Duas tapiocas molhadas com Cuscuz. Feito na hora, com carinho de casa.</p>
             <div class="d-flex align-items-center gap-3 mb-4">
-              <div class="hero-preco"><span class="me-2 text-muted"><s>R$ 23,00</s></span> R$ 19,00</div>
+              <div class="hero-preco">
+                <span class="me-3 text-white-50"><s>R$ 23,00</s></span> R$ 19,00
+              </div>
               <span class="selo-off">-17%</span>
             </div>
-            <div class="d-flex flex-wrap gap-2">
-              <a href="#pedido" class="btn btn-dark btn-lg"><i class="bi bi-lightning-charge me-1"></i> Pedir agora</a>
-              <a href="#cardapio" class="btn btn-outline-dark btn-lg">Ver cardápio</a>
+            <div class="d-flex flex-column flex-md-row gap-3">
+              <a href="#cardapio" class="btn-hero btn-hero-primary">
+                <i class="bi bi-lightning-charge"></i> Pedir agora
+              </a>
+              <a href="#cardapio" class="btn-hero btn-hero-secondary">
+                <i class="bi bi-grid"></i> Ver cardápio
+              </a>
             </div>
-            <p class="mini mt-3 mb-0"><i class="bi bi-clock-history me-1"></i> Válido até esse domingo • Retirada ou delivery</p>
+            <p class="mt-4 mb-0 text-white-50">
+              <i class="bi bi-clock me-2"></i> Válido até esse domingo • Retirada ou delivery
+            </p>
           </div>
           <div class="col-12 col-lg-5">
-            <!-- Espaço visual sem imagem: apenas layout -->
-            <img src="images/promo sem fundo.png" alt="Tapioca Molhada" class="img-fluid">
+            <img src="images/promo sem fundo.png" alt="Combo da Manhã Caseira" class="img-fluid" style="filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));">
           </div>
         </div>
       </div>
-      <div class="onda"></div>
     </header>
 
-    <!-- Listagem de Produtos -->
-    <section class="py-2">
+    <!-- Café da Manhã -->
+    <section class="section-padding" id="manha">
       <div class="container">
-        <!-- Café da Manhã -->
-        <div class="d-flex align-items-center justify-content-between mb-2" id="manha">
-          <h2 class="h4 m-0">Café da Manhã</h2>
-        </div>
-        <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 mb-4">
+        <h2 class="section-title fade-in">Café da Manhã</h2>
+        <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
           <!-- Card 1 -->
-          <div class="col">
-            <article class="card card-produto">
-            
+          <div class="col fade-in">
+            <article class="card card-produto" data-nome="Tapioca Molhada" data-preco="4.00">
+              <img src="images/Tapioca molhada.jpg" alt="Tapioca Molhada">
               <div class="card-body">
-                <img src="images/Tapioca molhada.jpg" alt="Tapioca Molhada" class="img-fluid">
-                <h3 class="h6 mb-1">Tapioca Molhada</h3>
-                <p class="mini mb-2"></p>
+                <h3>Tapioca Molhada</h3>
+                <p class="text-muted mb-3">Tradicional tapioca molhada, feita na hora</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="preco">R$ 4,00</span>
-                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                  <button class="btn btn-add">
+                    <i class="bi bi-plus-lg"></i>Adicionar
+                  </button>
                 </div>
               </div>
             </article>
           </div>
           <!-- Card 2 -->
-          <div class="col">
-            <article class="card card-produto">
+          <div class="col fade-in">
+            <article class="card card-produto" data-nome="Tapioca com Manteiga" data-preco="4.00">
+              <img src="images/Tapioca com manteiga.jpg" alt="Tapioca com Manteiga">
               <div class="card-body">
-                <img src="images/Tapioca com manteiga.jpg" alt="Tapioca Molhada" class="img-fluid">
-                <h3 class="h6 mb-1">Tapioca com Manteiga</h3>
-                <p class="mini mb-2"></p>
+                <h3>Tapioca com Manteiga</h3>
+                <p class="text-muted mb-3">Tapioca fresquinha com manteiga derretida</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="preco">R$ 4,00</span>
-                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                  <button class="btn btn-add">
+                    <i class="bi bi-plus-lg"></i>Adicionar
+                  </button>
                 </div>
               </div>
             </article>
           </div>
           <!-- Card 3 -->
-          <div class="col">
-            <article class="card card-produto">
+          <div class="col fade-in">
+            <article class="card card-produto" data-nome="Pão Caseiro" data-preco="15.00">
+              <img src="images/Pão Caseiro.jpg" alt="Pão Caseiro">
               <div class="card-body">
-                <img src="images/Pão Caseiro.jpg" alt="Tapioca Molhada" class="img-fluid">
-                <h3 class="h6 mb-1">Pão Caseiro</h3>
-                <p class="mini mb-2"></p>
+                <h3>Pão Caseiro</h3>
+                <p class="text-muted mb-3">Pão quentinho feito em casa</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="preco">R$ 15,00</span>
-                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                  <button class="btn btn-add">
+                    <i class="bi bi-plus-lg"></i>Adicionar
+                  </button>
                 </div>
               </div>
             </article>
           </div>
           <!-- Card 4 -->
-          <div class="col">
-            <article class="card card-produto">
+          <div class="col fade-in">
+            <article class="card card-produto" data-nome="Cuscuz" data-preco="15.00">
+              <img src="images/Cuscuz.jpg" alt="Cuscuz">
               <div class="card-body">
-                <img src="images/Cuscuz.jpg" alt="Tapioca Molhada" class="img-fluid">
-                <h3 class="h6 mb-1">Cuscuz</h3>
-                <p class="mini mb-2"></p>
+                <h3>Cuscuz</h3>
+                <p class="text-muted mb-3">Cuscuz tradicional nordestino</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="preco"><s>R$ 20,00</s> R$ 15,00</span>
-                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                  <button class="btn btn-add">
+                    <i class="bi bi-plus-lg"></i>Adicionar
+                  </button>
                 </div>
               </div>
             </article>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Comidas Caseiras e Lanches -->
+    <!-- Comidas Caseiras -->
+    <section class="section-padding section-bg" id="caseiros">
+      <div class="container">
+        <h2 class="section-title fade-in">Comidas Caseiras & Doces</h2>
         <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
           <!-- Card 5 -->
-          <div class="col">
-            <article class="card card-produto">
-
+          <div class="col fade-in">
+            <article class="card card-produto" data-nome="Empada" data-preco="3.00">
+              <img src="images/Empada.jpg" alt="Empada">
               <div class="card-body">
-                <img src="images/Empada.jpg" alt="Tapioca Molhada" class="img-fluid">
-                <h3 class="h6 mb-1">Empada</h3>
-                <p class="mini mb-2"></p>
+                <h3>Empada</h3>
+                <p class="text-muted mb-3">Empada caseira com recheio especial</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="preco">R$ 3,00</span>
-                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                  <button class="btn btn-add">
+                    <i class="bi bi-plus-lg"></i>Adicionar
+                  </button>
                 </div>
               </div>
             </article>
           </div>
           <!-- Card 6 -->
-          <div class="col">
-            <article class="card card-produto">
+          <div class="col fade-in">
+            <article class="card card-produto" data-nome="Bolo de Chocolate" data-preco="20.00">
+              <img src="images/Bolo de Chocolate 20.jpg" alt="Bolo de Chocolate">
               <div class="card-body">
-                <img src="images/Bolo de Chocolate 20.jpg" alt="Tapioca Molhada" class="img-fluid">
-                <h3 class="h6 mb-1">Bolo de Chocolate</h3>
-                <p class="mini mb-2"></p>
+                <h3>Bolo de Chocolate</h3>
+                <p class="text-muted mb-3">Bolo de chocolate caseiro irresistível</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="preco">R$ 20,00</span>
-                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                  <button class="btn btn-add">
+                    <i class="bi bi-plus-lg"></i>Adicionar
+                  </button>
                 </div>
               </div>
             </article>
           </div>
           <!-- Card 7 -->
-          <div class="col">
-            <article class="card card-produto">
+          <div class="col fade-in">
+            <article class="card card-produto" data-nome="Bolo Formigueiro" data-preco="20.00">
+              <img src="images/Bolo Formigueiro.jpg" alt="Bolo Formigueiro">
               <div class="card-body">
-                <img src="images/Bolo Formigueiro.jpg" alt="Tapioca Molhada" class="img-fluid">
-                <h3 class="h6 mb-1">Bolo Formigueiro</h3>
-                <p class="mini mb-2"></p>
+                <h3>Bolo Formigueiro</h3>
+                <p class="text-muted mb-3">Clássico bolo formigueiro com granulado</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="preco">R$ 20,00</span>
-                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                  <button class="btn btn-add">
+                    <i class="bi bi-plus-lg"></i>Adicionar
+                  </button>
                 </div>
               </div>
             </article>
           </div>
           <!-- Card 8 -->
-          <div class="col">
-            <article class="card card-produto">
+          <div class="col fade-in">
+            <article class="card card-produto" data-nome="Bolo de Milho" data-preco="20.00">
+              <img src="images/Bolo de milho.jpg" alt="Bolo de Milho">
               <div class="card-body">
-                <img src="images/Bolo de milho.jpg" alt="Tapioca Molhada" class="img-fluid">
-                <h3 class="h6 mb-1">Bolo de Milho</h3>
-                <p class="mini mb-2"></p>
+                <h3>Bolo de Milho</h3>
+                <p class="text-muted mb-3">Bolo de milho cremoso e saboroso</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="preco">R$ 20,00</span>
-                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                  <button class="btn btn-add">
+                    <i class="bi bi-plus-lg"></i>Adicionar
+                  </button>
                 </div>
               </div>
             </article>
           </div>
           <!-- Card 9 -->
-          <div class="col">
-            <article class="card card-produto">
+          <div class="col fade-in">
+            <article class="card card-produto" data-nome="Bolo de Milho Mini" data-preco="5.00">
+              <img src="images/Bolo de milho mini 2. 5 reais.jpg" alt="Bolo de Milho Mini">
               <div class="card-body">
-                <img src="images/Bolo de milho mini 2. 5 reais.jpg" alt="Tapioca Molhada" class="img-fluid">
-                <h3 class="h6 mb-1">Bolo de Milho Mini</h3>
-                <p class="mini mb-2"></p>
+                <h3>Bolo de Milho Mini</h3>
+                <p class="text-muted mb-3">Versão individual do nosso bolo de milho</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="preco">R$ 5,00</span>
-                  <button class="btn btn-sm btn-add"><i class="bi bi-plus-lg me-1"></i>Adicionar</button>
+                  <button class="btn btn-add">
+                    <i class="bi bi-plus-lg"></i>Adicionar
+                  </button>
                 </div>
               </div>
             </article>
@@ -262,32 +648,111 @@
     </section>
 
     <!-- Informações e Contato -->
-    <section class="py-5" id="contato">
+    <section class="section-padding" id="contato">
       <div class="container">
+        <h2 class="section-title fade-in mb-5">Informações & Contato</h2>
         <div class="row g-4">
-          <div class="col-12 col-lg-6">
-            <h2 class="h4">Sobre</h2>
-            <p class="mini">Comida rápida com sabor de casa. Tudo é feito na hora!</p>
-            <ul class="mini list-unstyled mb-0">
-              <li><i class="bi bi-geo-alt me-2"></i> Rua Santa Izabel, 277 – Bairro: Cruzeiro (Icoaraci), Belém/PA.</li>
-              <li><i class="bi bi-clock me-2"></i> Dom: 6h às 12h</li>
-              <li><i class="bi bi-telephone me-2"></i> (91) 9 8165-4787</li>
-            </ul>
+          <div class="col-12 col-md-6 col-lg-4 fade-in">
+            <div class="info-card text-center">
+              <div class="info-icon mx-auto">
+                <i class="bi bi-geo-alt"></i>
+              </div>
+              <h3 class="h5 mb-3">Localização</h3>
+              <p class="text-muted mb-0">Rua Santa Izabel, 277<br>Bairro: Cruzeiro (Icoaraci)<br>Belém/PA</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 fade-in">
+            <div class="info-card text-center">
+              <div class="info-icon mx-auto">
+                <i class="bi bi-clock"></i>
+              </div>
+              <h3 class="h5 mb-3">Horário</h3>
+              <p class="text-muted mb-0">Domingo<br>6h às 12h<br>Café da manhã especial</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 fade-in">
+            <div class="info-card text-center">
+              <div class="info-icon mx-auto">
+                <i class="bi bi-whatsapp"></i>
+              </div>
+              <h3 class="h5 mb-3">WhatsApp</h3>
+              <p class="text-muted mb-3">(91) 9 8165-4787</p>
+              <a href="https://wa.me/5591981654787" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-whatsapp me-1"></i> Falar conosco
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12 fade-in">
+            <div class="info-card">
+              <h3 class="h4 mb-3">Sobre o Bom Dia Fast</h3>
+              <p class="text-muted mb-0">
+                Somos especializados em comida rápida com sabor de casa. Todos os nossos produtos são feitos na hora, 
+                com ingredientes frescos e muito carinho. Nossa missão é levar o melhor da culinária caseira para sua mesa, 
+                seja no café da manhã ou em qualquer momento do dia. Venha experimentar nossos sabores únicos!
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <footer class="py-4">
+    <footer>
       <div class="container text-center">
-        <small class="text-secondary">© <span id="ano"></span> Bom Dia Fast — Todos os direitos reservados</small>
+        <div class="row">
+          <div class="col-12">
+            <div class="mb-3">
+              <span class="h5 text-white">
+                <i class="bi bi-egg-fried me-2 text-warning"></i> Bom Dia <span class="text-warning">Fast</span>
+              </span>
+            </div>
+            <p class="mb-2">Comida rápida com sabor de casa</p>
+            <small class="text-secondary">© <span id="ano"></span> Bom Dia Fast — Todos os direitos reservados</small>
+          </div>
+        </div>
       </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/cart-logic.js"></script>
+    <script src="/js/cart-loader.js" defer></script>
     <script>
-      // atualiza ano no rodapé
+      // Atualiza ano no rodapé
       document.getElementById('ano').textContent = new Date().getFullYear();
+
+      // Animação de fade-in ao scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.fade-in').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Smooth scroll para links internos
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            const offsetTop = target.offsetTop - 80;
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
     </script>
   </body>
 </html>
