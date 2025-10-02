@@ -1,4 +1,4 @@
-# bom dia fast – lanchonete Caseira 🍔☕
+# Domingo fast – lanchonete Caseira 🍔☕
 
 Este projeto é um site para uma lanchonete/fastfood especializada em **comidas caseiras** e **café da manhã**. O objetivo é apresentar os produtos, facilitar os pedidos e destacar ofertas especiais, tudo em um ambiente digital moderno e **responsivo**.
 

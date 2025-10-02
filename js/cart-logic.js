@@ -163,7 +163,7 @@ function gerarMensagemWhatsApp() {
   const formaPagamento = document.getElementById('formaPagamento').value;
   const valorTroco = document.getElementById('valorTroco').value;
 
-  let mensagem = `🍔 *PEDIDO - BOM DIA FAST* 🍔\n\n`;
+  let mensagem = `🍔 *PEDIDO - Domingo FAST* 🍔\n\n`;
   mensagem += `👤 *Cliente:* ${nome}\n`;
   mensagem += `📱 *Telefone:* ${telefone}\n`;
   mensagem += `📍 *Endereço:* ${endereco}\n\n`;
@@ -182,7 +182,7 @@ function gerarMensagemWhatsApp() {
   mensagem += `💳 *Forma de pagamento:* `;
   switch(formaPagamento) {
     case 'pix':
-      mensagem += `PIX\n\n🔑 *Chave PIX:* (91) 9 8165-4787\n📱 *Nome:* Bom Dia Fast`;
+      mensagem += `PIX\n\n🔑 *Chave PIX:* (91) 9 8165-4787\n📱 *Nome:* Domingo Fast`;
       break;
     case 'dinheiro':
       mensagem += `Dinheiro`;
